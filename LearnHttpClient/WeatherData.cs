@@ -55,6 +55,7 @@ public class Weather
     public string? Icon { get; set; }
 }
 
+// Main weather data
 public class Main
 {
     public double? Temp { get; set; }

@@ -8,15 +8,17 @@ namespace LearnHttpClient;
 
 class Program
 {
+    public static HttpClient client = new HttpClient();
+
     public static string baseUrlForCities = "https://countriesnow.space/api/v0.1";
 
     public static string baseUrlForWeather = "https://api.openweathermap.org/data/2.5";
 
     public static string apiKey = "b11365829b240e9f34947ab9187f258b";
 
-    static CountriesAndCities? root;
+    public static CountriesAndCities? countriesAndCitiesData;
 
-    static WeatherData? weather;
+    public static WeatherData? weather;
 
     static void Main(string[] args)
     {
@@ -27,12 +29,12 @@ class Program
         {
             try
             {
-                string city = GetCity();
+                CityResult? city = GetCity();
 
-                if (!string.IsNullOrWhiteSpace(city))
+                if (city != null && !string.IsNullOrWhiteSpace(city.City))
                 {
                     string weather = GetWeather(city);
-                    PrintL($"The weather in {city} is: {weather}");
+                    PrintL($"The weather in {city} is:\n{weather}");
                 }
             }
             catch
@@ -62,14 +64,14 @@ class Program
         PrintL("log: loading cities...");
 
         var endpoint = new Uri(baseUrlForCities + "/countries");
-        var client = new HttpClient();
         var result = client.GetAsync(endpoint).Result;
         var json = result.Content.ReadAsStringAsync().Result;
-        root = JsonConvert.DeserializeObject<CountriesAndCities>(json);
+        countriesAndCitiesData = JsonConvert.DeserializeObject<CountriesAndCities>(json);
 
-        if (root == null || root.Data == null)
+        if (countriesAndCitiesData == null || countriesAndCitiesData.Data == null)
         {
             PrintL("log: JSON parse error.");
+            PrintL("log: cities aren't loaded.");
         }
         else
         {
@@ -79,7 +81,7 @@ class Program
         return;
     }
 
-    public static string GetCity()
+    public static CityResult? GetCity()
     {
         string input;
 
@@ -90,7 +92,7 @@ class Program
 
             if (input.Contains("exit"))
             {
-                return string.Empty;
+                return null;
             }
             else if (string.IsNullOrWhiteSpace(input) || input.Length < 3)
             {
@@ -102,26 +104,29 @@ class Program
         } while (true);
     }
 
-    public static string FindExistingCity(string input)
+    public static CityResult? FindExistingCity(string input)
     {
-        if (root == null)
+        if (countriesAndCitiesData == null)
         {
-            return input;
+            return new CityResult(input, null);
         }
 
         string search = input.ToLower();
 
-        var matchedCities = root.Data
-            .SelectMany(country => country.Cities)
-            .Where(city => city.ToLower().Contains(search))
-            .Distinct()
-            .OrderBy(c => c)
+        var matchedCities = countriesAndCitiesData.Data
+            .SelectMany(country => country.Cities
+                .Where(city => city.ToLower().Contains(search))
+                .Select(city => new CityResult(city, country.Iso2))
+            )
+            //.Distinct()
+            //.OrderBy(c => c)
+            .OrderBy(x => x.City)
             .ToList();
 
         if (matchedCities.Count == 0)
         {
             PrintL("No cities found.");
-            return string.Empty;
+            return null;
         }
         else if (matchedCities.Count == 1)
         {
@@ -146,7 +151,7 @@ class Program
                 if (cityNumber == -1)
                 {
                     PrintL("log: exit...");
-                    return "";
+                    return null;
                 }
                 else if (cityNumber >= matchedCities.Count)
                 {
@@ -159,16 +164,15 @@ class Program
         }
     }
 
-    public static string GenerateWeatherEndpoint(string city)
+    public static string GenerateWeatherEndpoint(CityResult city)
     {
-        return $"{baseUrlForWeather}/weather?q={city},ua&units=metric&appid={apiKey}";
+        return $"{baseUrlForWeather}/weather?q={city}&units=metric&appid={apiKey}";
     }
 
-    public static string GetWeather(string city)
+    public static string GetWeather(CityResult city)
     {
         PrintL("log: loading weather...");
 
-        var client = new HttpClient();
         var result = client.GetAsync(GenerateWeatherEndpoint(city)).Result;
         var json = result.Content.ReadAsStringAsync().Result;
 
@@ -184,6 +188,18 @@ class Program
             PrintL("log: weather is loaded.");
         }
 
-        return "";
+        if (weather.Main == null)
+        {
+            return "No data";
+        }
+
+        Main mainWeatherData = weather.Main;
+
+        return
+            $"Temperature: {mainWeatherData.Temp}\n" +
+            $"Min temp   : {mainWeatherData.Temp_min}\n" +
+            $"Max temp   : {mainWeatherData.Temp_max}\n" +
+            $"Pressure   : {mainWeatherData.Pressure}\n" +
+            $"Humidity   : {mainWeatherData.Humidity}";
     }
 }
