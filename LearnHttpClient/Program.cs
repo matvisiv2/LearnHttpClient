@@ -3,6 +3,7 @@ using System.Net;
 using System.Text.RegularExpressions;
 using static System.Net.WebRequestMethods;
 using Newtonsoft.Json;
+using System.Threading.Tasks;
 
 namespace LearnHttpClient;
 
@@ -59,23 +60,40 @@ class Program
         Console.WriteLine(string.Join("", values));
     }
 
-    public static void LoadCities()
+    public static async Task LoadCities()
     {
-        PrintL("log: loading cities...");
+        bool loading = true;
 
+        // Thread with loading animation
+        var spinner = Task.Run(async () =>
+        {
+            string[] dots = { "", ".", "..", "..." };
+            int i = 0;
+
+            while (loading)
+            {
+                Console.Clear();
+                PrintL($"cities loading{dots[i]}");
+                i = (i + 1) % dots.Length;
+                await Task.Delay(300);
+            }
+        });
+
+        // Cities loading
         var endpoint = new Uri(baseUrlForCities + "/countries");
         var result = client.GetAsync(endpoint).Result;
         var json = result.Content.ReadAsStringAsync().Result;
         countriesAndCitiesData = JsonConvert.DeserializeObject<CountriesAndCities>(json);
 
+        // When the load is copmleted
+        loading = false;
+        Console.Clear();
+        await spinner;
+
         if (countriesAndCitiesData == null || countriesAndCitiesData.Data == null)
         {
             PrintL("log: JSON parse error.");
             PrintL("log: cities aren't loaded.");
-        }
-        else
-        {
-            PrintL("log: cities are loaded.");
         }
 
         return;
