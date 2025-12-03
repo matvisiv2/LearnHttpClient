@@ -1,9 +1,4 @@
-﻿using System;
-using System.Net;
-using System.Text.RegularExpressions;
-using static System.Net.WebRequestMethods;
-using Newtonsoft.Json;
-using System.Threading.Tasks;
+﻿using Newtonsoft.Json;
 
 namespace LearnHttpClient;
 
@@ -17,7 +12,7 @@ class Program
 
     public static string apiKey = "b11365829b240e9f34947ab9187f258b";
 
-    public static CountriesAndCities? countriesAndCitiesData;
+    public static CountriesAndCitiesData? countriesAndCitiesData;
 
     public static WeatherData? weather;
 
@@ -83,7 +78,7 @@ class Program
         var endpoint = new Uri(baseUrlForCities + "/countries");
         var result = client.GetAsync(endpoint).Result;
         var json = result.Content.ReadAsStringAsync().Result;
-        countriesAndCitiesData = JsonConvert.DeserializeObject<CountriesAndCities>(json);
+        countriesAndCitiesData = JsonConvert.DeserializeObject<CountriesAndCitiesData>(json);
 
         // When the load is copmleted
         loading = false;
