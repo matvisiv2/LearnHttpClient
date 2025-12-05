@@ -1,5 +1,12 @@
 ﻿namespace LearnHttpClient;
 
+public enum Units
+{
+    Standard,
+    Metric,
+    Imperial
+}
+
 public class WeatherData
 {
     public Coord? Coord { get; set; }

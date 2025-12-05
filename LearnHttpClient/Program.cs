@@ -6,12 +6,6 @@ class Program
 {
     public static HttpClient client = new HttpClient();
 
-    public static string baseUrlForCities = "https://countriesnow.space/api/v0.1";
-
-    public static string baseUrlForWeather = "https://api.openweathermap.org/data/2.5";
-
-    public static string apiKey = "b11365829b240e9f34947ab9187f258b";
-
     public static CountriesAndCitiesData? countriesAndCitiesData;
 
     public static WeatherData? weather;
@@ -75,9 +69,9 @@ class Program
         });
 
         // Cities loading
-        var endpoint = new Uri(baseUrlForCities + "/countries");
-        var result = client.GetAsync(endpoint).Result;
-        var json = result.Content.ReadAsStringAsync().Result;
+        string endpoint = ProgramConsts.BaseUrlForCities + "/countries";
+        var result = client.GetAsync(endpoint).GetAwaiter().GetResult();
+        var json = result.Content.ReadAsStringAsync().GetAwaiter().GetResult();
         countriesAndCitiesData = JsonConvert.DeserializeObject<CountriesAndCitiesData>(json);
 
         // When the load is copmleted
@@ -90,8 +84,6 @@ class Program
             PrintL("log: JSON parse error.");
             PrintL("log: cities aren't loaded.");
         }
-
-        return;
     }
 
     public static CityResult? GetCity()
@@ -143,7 +135,8 @@ class Program
         }
         else if (matchedCities.Count == 1)
         {
-            return matchedCities[0];
+            //return matchedCities[0];
+            return matchedCities.FirstOrDefault();
         }
         else
         {
@@ -159,14 +152,17 @@ class Program
                 }
                 Print("Select number from the list (or type e to exit):");
 
-                cityNumber = int.TryParse(Console.ReadLine(), out cityNumber) ? cityNumber : -1;
+                string inputCityNumber = Console.ReadLine() ?? "";
 
-                if (cityNumber == -1)
+                if (inputCityNumber.Contains("exit"))
                 {
                     PrintL("log: exit...");
                     return null;
                 }
-                else if (cityNumber >= matchedCities.Count)
+
+                cityNumber = int.TryParse(inputCityNumber, out cityNumber) ? cityNumber : -1;
+
+                if (cityNumber >= matchedCities.Count || cityNumber < 0)
                 {
                     PrintL("Wron input. Try again...");
                     continue;
@@ -179,21 +175,25 @@ class Program
 
     public static string GenerateWeatherEndpoint(CityResult city)
     {
-        return $"{baseUrlForWeather}/weather?q={city}&units=metric&appid={apiKey}";
+        return $"{ProgramConsts.BaseUrlForWeather}/weather?q={city}&units={Units.Metric.ToString().ToLower()}&appid={ProgramConsts.ApiKey}";
     }
 
     public static string GetWeather(CityResult city)
     {
         PrintL("log: loading weather...");
 
-        var result = client.GetAsync(GenerateWeatherEndpoint(city)).Result;
-        var json = result.Content.ReadAsStringAsync().Result;
+        string endpoint = GenerateWeatherEndpoint(city);
+        var result = client.GetAsync(endpoint).GetAwaiter().GetResult();
+        var json = result.Content.ReadAsStringAsync().GetAwaiter().GetResult();
 
         weather = JsonConvert.DeserializeObject<WeatherData>(json);
 
-        if (weather == null || weather.Main == null)
+        if (weather == null)
         {
             PrintL($"log: JSON parse error.");
+        }
+        else if (weather.Main == null)
+        {
             PrintL($"log: {weather.Message}.");
         }
         else
@@ -209,10 +209,10 @@ class Program
         Main mainWeatherData = weather.Main;
 
         return
-            $"Temperature: {mainWeatherData.Temp}\n" +
-            $"Min temp   : {mainWeatherData.Temp_min}\n" +
-            $"Max temp   : {mainWeatherData.Temp_max}\n" +
-            $"Pressure   : {mainWeatherData.Pressure}\n" +
-            $"Humidity   : {mainWeatherData.Humidity}";
+            $"Temperature: {mainWeatherData.Temp} C{(char)176}\n" +
+            $"Min temp   : {mainWeatherData.Temp_min} C{(char)176}\n" +
+            $"Max temp   : {mainWeatherData.Temp_max} C{(char)176}\n" +
+            $"Pressure   : {mainWeatherData.Pressure} Pa\n" +
+            $"Humidity   : {mainWeatherData.Humidity} %";
     }
 }
