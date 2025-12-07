@@ -21,13 +21,13 @@ public class CountriesAndCitiesService
         //    while (loading)
         //    {
         //        Console.Clear();
-        //        PrintL($"cities loading{dots[i]}");
+        //        Console.WriteLine($"cities loading{dots[i]}");
         //        i = (i + 1) % dots.Length;
         //        await Task.Delay(300);
         //    }
         //});
 
-        PrintL($"Cities is loading...");
+        Console.WriteLine($"Cities is loading...");
 
         // Cities loading
         string endpoint = BaseUrlForCities + "/countries";
@@ -43,8 +43,8 @@ public class CountriesAndCitiesService
 
         if (countriesAndCitiesData == null || countriesAndCitiesData.Data == null)
         {
-            PrintL("log: JSON parse error.");
-            PrintL("log: cities aren't loaded.");
+            Console.WriteLine("log: JSON parse error.");
+            Console.WriteLine("log: cities aren't loaded.");
         }
     }
 
@@ -63,7 +63,7 @@ public class CountriesAndCitiesService
             }
             else if (string.IsNullOrWhiteSpace(input) || input.Length < 3)
             {
-                PrintL("Input is too short or empty. Try again...");
+                Console.WriteLine("Input is too short or empty. Try again...");
                 continue;
             }
 
@@ -90,7 +90,7 @@ public class CountriesAndCitiesService
 
         if (matchedCities.Count == 0)
         {
-            PrintL("No cities found.");
+            Console.WriteLine("No cities found.");
             return null;
         }
         else if (matchedCities.Count == 1)
@@ -103,19 +103,19 @@ public class CountriesAndCitiesService
 
             do
             {
-                PrintL("City not found. Perhaps you mean the following:");
-                PrintL("Matched cities:");
+                Console.WriteLine("City not found. Perhaps you mean the following:");
+                Console.WriteLine("Matched cities:");
                 for (int i = 0; i < matchedCities.Count; i++)
                 {
-                    PrintL($"{i}. {matchedCities[i]};");
+                    Console.WriteLine($"{i}. {matchedCities[i]};");
                 }
-                Print("Select number from the list (or type e to exit):");
+                Console.Write("Select number from the list (or type e to exit):");
 
                 string inputCityNumber = Console.ReadLine() ?? "";
 
                 if (inputCityNumber.Contains("exit"))
                 {
-                    PrintL("log: exit...");
+                    Console.WriteLine("log: exit...");
                     return null;
                 }
 
@@ -123,22 +123,12 @@ public class CountriesAndCitiesService
 
                 if (cityNumber >= matchedCities.Count || cityNumber < 0)
                 {
-                    PrintL("Wron input. Try again...");
+                    Console.WriteLine("Wron input. Try again...");
                     continue;
                 }
 
                 return matchedCities[cityNumber];
             } while (true);
         }
-    }
-
-    public static void Print(params object[] values)
-    {
-        Console.Write(string.Join("", values));
-    }
-
-    public static void PrintL(params object[] values)
-    {
-        Console.WriteLine(string.Join("", values));
     }
 }

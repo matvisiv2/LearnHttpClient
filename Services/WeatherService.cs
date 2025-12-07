@@ -13,7 +13,7 @@ public class WeatherService
 
     public static string GetWeather(ref HttpClient client, string baseUrlForWeather, string apiKey, CityResult city)
     {
-        PrintL("log: loading weather...");
+        Console.WriteLine("log: loading weather...");
 
         string endpoint = GenerateWeatherEndpoint(baseUrlForWeather, apiKey, city);
         var result = client.GetAsync(endpoint).GetAwaiter().GetResult();
@@ -23,15 +23,15 @@ public class WeatherService
 
         if (weather == null)
         {
-            PrintL($"log: JSON parse error.");
+            Console.WriteLine($"log: JSON parse error.");
         }
         else if (weather.Main == null)
         {
-            PrintL($"log: {weather.Message}.");
+            Console.WriteLine($"log: {weather.Message}.");
         }
         else
         {
-            PrintL("log: weather is loaded.");
+            Console.WriteLine("log: weather is loaded.");
         }
 
         if (weather?.Main == null)
@@ -47,15 +47,5 @@ public class WeatherService
             $"Max temp   : {mainWeatherData.Temp_max} C{(char)176}\n" +
             $"Pressure   : {mainWeatherData.Pressure} Pa\n" +
             $"Humidity   : {mainWeatherData.Humidity} %";
-    }
-
-    public static void Print(params object[] values)
-    {
-        Console.Write(string.Join("", values));
-    }
-
-    public static void PrintL(params object[] values)
-    {
-        Console.WriteLine(string.Join("", values));
     }
 }

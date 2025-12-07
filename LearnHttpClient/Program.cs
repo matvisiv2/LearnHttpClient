@@ -21,28 +21,18 @@ class Program
                 if (city != null && !string.IsNullOrWhiteSpace(city.City))
                 {
                     string weather = WeatherService.GetWeather(ref client, ProgramConsts.BaseUrlForWeather, ProgramConsts.ApiKey, city);
-                    PrintL($"The weather in {city} is:\n{weather}");
+                    Console.WriteLine($"The weather in {city} is:\n{weather}");
                 }
             }
             catch
             {
-                PrintL("log: error.");
+                Console.WriteLine("log: error.");
             }
 
-            Print("Press enter to continue or type 'exit' to exit: ");
+            Console.Write("Press enter to continue or type 'exit' to exit: ");
             menu = Console.ReadLine() ?? "";
         } while (!menu.Contains("exit"));
 
-        PrintL("log: exit...");
-    }
-
-    public static void Print(params object[] values)
-    {
-        Console.Write(string.Join("", values));
-    }
-
-    public static void PrintL(params object[] values)
-    {
-        Console.WriteLine(string.Join("", values));
+        Console.WriteLine("log: exit...");
     }
 }
