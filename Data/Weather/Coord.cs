@@ -1,4 +1,4 @@
-namespace LearnHttpClient;
+namespace Data.Weather;
 
 public class Coord
 {

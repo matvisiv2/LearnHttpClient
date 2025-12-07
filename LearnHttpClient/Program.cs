@@ -1,4 +1,6 @@
 ﻿using Newtonsoft.Json;
+using Data.CountriesAndCities;
+using Data.Weather;
 
 namespace LearnHttpClient;
 
@@ -123,8 +125,6 @@ class Program
                 .Where(city => city.ToLower().Contains(search))
                 .Select(city => new CityResult(city, country.Iso2))
             )
-            //.Distinct()
-            //.OrderBy(c => c)
             .OrderBy(x => x.City)
             .ToList();
 
@@ -135,7 +135,6 @@ class Program
         }
         else if (matchedCities.Count == 1)
         {
-            //return matchedCities[0];
             return matchedCities.FirstOrDefault();
         }
         else
@@ -201,7 +200,7 @@ class Program
             PrintL("log: weather is loaded.");
         }
 
-        if (weather.Main == null)
+        if (weather?.Main == null)
         {
             return "No data";
         }

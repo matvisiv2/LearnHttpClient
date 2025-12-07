@@ -5,6 +5,8 @@ VisualStudioVersion = 17.14.36705.20
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LearnHttpClient", "learnHttpClient\LearnHttpClient.csproj", "{184EAEE4-DA60-4C1B-851C-3415B07B3DBF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Data", "Data\Data.csproj", "{A14B7FF4-323C-4691-B29C-4C705A71D4E1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{184EAEE4-DA60-4C1B-851C-3415B07B3DBF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{184EAEE4-DA60-4C1B-851C-3415B07B3DBF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{184EAEE4-DA60-4C1B-851C-3415B07B3DBF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A14B7FF4-323C-4691-B29C-4C705A71D4E1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A14B7FF4-323C-4691-B29C-4C705A71D4E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A14B7FF4-323C-4691-B29C-4C705A71D4E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A14B7FF4-323C-4691-B29C-4C705A71D4E1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

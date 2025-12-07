@@ -1,4 +1,4 @@
-namespace LearnHttpClient;
+namespace Data.Weather;
 
 // Main weather data
 public class Main
