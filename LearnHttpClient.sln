@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LearnHttpClient", "learnHtt
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Data", "Data\Data.csproj", "{A14B7FF4-323C-4691-B29C-4C705A71D4E1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services", "Services\Services.csproj", "{96DA85AB-4499-4888-9FAF-316999F4C7AA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{A14B7FF4-323C-4691-B29C-4C705A71D4E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A14B7FF4-323C-4691-B29C-4C705A71D4E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A14B7FF4-323C-4691-B29C-4C705A71D4E1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{96DA85AB-4499-4888-9FAF-316999F4C7AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{96DA85AB-4499-4888-9FAF-316999F4C7AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{96DA85AB-4499-4888-9FAF-316999F4C7AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{96DA85AB-4499-4888-9FAF-316999F4C7AA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

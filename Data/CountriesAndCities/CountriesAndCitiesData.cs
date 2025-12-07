@@ -1,11 +1,10 @@
-﻿namespace Data.CountriesAndCities
+﻿namespace Data.CountriesAndCities;
+
+public class CountriesAndCitiesData
 {
-    public class CountriesAndCitiesData
-    {
-        public bool? Error { get; set; }
+    public bool? Error { get; set; }
 
-        public string? Msg { get; set; }
+    public string? Msg { get; set; }
 
-        public CountryData[]? Data { get; set; }
-    }
+    public CountryData[]? Data { get; set; }
 }
