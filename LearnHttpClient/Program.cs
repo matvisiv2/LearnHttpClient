@@ -1,4 +1,6 @@
-﻿using Data.CountriesAndCities;
+﻿using System.Net.Http;
+using Microsoft.Extensions.Configuration;
+using Data.CountriesAndCities;
 using Services;
 
 namespace LearnHttpClient;
@@ -9,16 +11,13 @@ class Program
 
     static void Main(string[] args)
     {
-        string menu;
+        ProgramConsts.LoadConfiguration();
 
-        try
-        {
-            CountriesAndCitiesService.LoadCities(ref client, ProgramConsts.BaseUrlForCities);
-        }
-        catch (System.Net.Http.HttpRequestException)
-        {
-            Console.WriteLine("No internet. Check internet connection.");
-        }
+        client.Timeout = TimeSpan.FromSeconds(ProgramConsts.TimeoutSec);
+
+        CountriesAndCitiesService.LoadCities(ref client, ProgramConsts.BaseUrlForCities);
+
+        string menu;
 
         do
         {
