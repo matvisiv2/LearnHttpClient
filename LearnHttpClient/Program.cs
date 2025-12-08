@@ -9,8 +9,16 @@ class Program
 
     static void Main(string[] args)
     {
-        string menu; ;
-        CountriesAndCitiesService.LoadCities(ref client, ProgramConsts.BaseUrlForCities);
+        string menu;
+
+        try
+        {
+            CountriesAndCitiesService.LoadCities(ref client, ProgramConsts.BaseUrlForCities);
+        }
+        catch (System.Net.Http.HttpRequestException)
+        {
+            Console.WriteLine("No internet. Check internet connection.");
+        }
 
         do
         {
@@ -23,6 +31,10 @@ class Program
                     string weather = WeatherService.GetWeather(ref client, ProgramConsts.BaseUrlForWeather, ProgramConsts.ApiKey, city);
                     Console.WriteLine($"The weather in {city} is:\n{weather}");
                 }
+            }
+            catch (System.Net.Http.HttpRequestException)
+            {
+                Console.WriteLine("No internet. Check internet connection.");
             }
             catch
             {
