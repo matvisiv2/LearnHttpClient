@@ -32,5 +32,9 @@ public class ProgramConsts
         {
             Console.WriteLine("Configuration file not found.");
         }
+        catch
+        {
+            Console.WriteLine("log: configuration error.");
+        }
     }
 }
