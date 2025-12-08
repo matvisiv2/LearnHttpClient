@@ -1,6 +1,4 @@
-﻿using System.Net.Http;
-using Microsoft.Extensions.Configuration;
-using Data.CountriesAndCities;
+﻿using Data.CountriesAndCities;
 using Services;
 
 namespace LearnHttpClient;

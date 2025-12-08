@@ -6,8 +6,13 @@ public class CityResult(string? city, string? country)
 
     public string? Country { get; set; } = country;
 
-    public override string ToString()
+    public override string? ToString()
     {
+        if (string.IsNullOrEmpty(Country))
+        {
+            return City;
+        }
+
         return $"{City},{Country}";
     }
 }

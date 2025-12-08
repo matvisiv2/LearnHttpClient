@@ -4,11 +4,11 @@ namespace LearnHttpClient;
 
 public class ProgramConsts
 {
-    public static string BaseUrlForCities;
+    public static string BaseUrlForCities = string.Empty;
 
-    public static string BaseUrlForWeather;
+    public static string BaseUrlForWeather = string.Empty;
 
-    public static string ApiKey;
+    public static string ApiKey = string.Empty;
 
     public static int TimeoutSec = 10;
 
