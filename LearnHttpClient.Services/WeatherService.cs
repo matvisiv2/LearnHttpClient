@@ -27,16 +27,12 @@ public class WeatherService
         }
         else if (weather.Main == null)
         {
-            Console.WriteLine($"log: {weather.Message}.");
+            return $"log: {weather.Message}.\nNo data";
+
         }
         else
         {
             Console.WriteLine("log: weather is loaded.");
-        }
-
-        if (weather?.Main == null)
-        {
-            return "No data";
         }
 
         Main mainWeatherData = weather.Main;

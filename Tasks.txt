@@ -1,31 +1,5 @@
 // Tasks.txt
 
 2025-12-09 Tue
-1. Rename projects with prefix "LearnHttpClient";
-2. 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Data.CountriesAndCities;
-using Data.Weather;
-
-namespace Services.Tests
-{
-    [TestClass]
-    public class WeatherServiceTests
-    {
-        [TestMethod]
-        public void GenerateWeatherEndpointTest()
-        {
-            // arrange
-            string baseUrlForWeather = "https://countriesnow.space/api/v0.1";
-            string apiKey = "b11365829b240e9f34947ab9187f258b";
-            CityResult? city = { "Kyiv", "UA" };
-            string expected = $"{baseUrlForWeather}/weather?q={city}&units={Units.Metric.ToString().ToLower()}&appid={apiKey}"";
-
-            // act
-            string actual = WeatherService.GenerateWeatherEndpoint(baseUrlForWeather, apiKey, city);
-
-            // assert
-            Assert.AreEqual(expected, actual);
-        }
-    }
-}
+1. Rename projects with prefix "LearnHttpClient"; +
+2. Add at least two tests; +
