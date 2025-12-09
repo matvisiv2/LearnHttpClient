@@ -1,4 +1,4 @@
-﻿namespace Data.Weather;
+﻿namespace LearnHttpClient.Data.Weather;
 
 public enum Units
 {

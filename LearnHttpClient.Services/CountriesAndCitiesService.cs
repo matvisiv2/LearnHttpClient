@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
-using Data.CountriesAndCities;
+using LearnHttpClient.Data.CountriesAndCities;
 
-namespace Services;
+namespace LearnHttpClient.Services;
 
 public class CountriesAndCitiesService
 {

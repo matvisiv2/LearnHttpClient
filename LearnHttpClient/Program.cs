@@ -1,5 +1,5 @@
-﻿using Data.CountriesAndCities;
-using Services;
+﻿using LearnHttpClient.Data.CountriesAndCities;
+using LearnHttpClient.Services;
 
 namespace LearnHttpClient;
 

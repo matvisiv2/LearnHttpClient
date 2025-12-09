@@ -1,4 +1,4 @@
-﻿namespace Data.CountriesAndCities;
+﻿namespace LearnHttpClient.Data.CountriesAndCities;
 
 public class CityResult(string? city, string? country)
 {

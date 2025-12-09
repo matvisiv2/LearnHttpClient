@@ -1,8 +1,8 @@
-﻿using Data.CountriesAndCities;
-using Data.Weather;
+﻿using LearnHttpClient.Data.CountriesAndCities;
+using LearnHttpClient.Data.Weather;
 using Newtonsoft.Json;
 
-namespace Services;
+namespace LearnHttpClient.Services;
 
 public class WeatherService
 {

@@ -14,8 +14,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Data\Data.csproj" />
-    <ProjectReference Include="..\Services\Services.csproj" />
+    <ProjectReference Include="..\LearnHttpClient.Data\LearnHttpClient.Data.csproj" />
+    <ProjectReference Include="..\LearnHttpClient.Services\LearnHttpClient.Services.csproj" />
   </ItemGroup>
 
   <ItemGroup>
